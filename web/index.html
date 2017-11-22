@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="js/jquery-3.2.1.min.js" type="text/javascript"></script>
+        <link href="css/materialize.min.css" rel="stylesheet" type="text/css"/>
+        <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+        <script src="js/materialize.min.js" type="text/javascript"></script>
+        <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+        <script src="js/index.js" type="text/javascript"></script>
+        <title>Gestión Académica</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#!" data-activates="menu-lateral" class="button-collapse show-on-large"><i class="material-icons">menu</i></a>
+                <a href="#!" class="brand-logo" >Gestión académica</a>
+                <ul id="menu-lateral" class="side-nav collapsible">
+                    <li class="white"><a href="#!">Inicio</a></li>
+                    <li class="white">
+                        <a class="collapsible-header">Alumnado<i class="material-icons"></i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="#!" id="al_alu">Alta</a></li>
+                                <li><a href="#!" id="mo_alu">Modificación</a></li>
+                                <li><a href="#!" id="li_alu">Listado</a></li>
+                                <li><a href="#!" id="bo_alu">Borrado</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="white">
+                        <a class="collapsible-header">Profesorado<i class="material-icons"></i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="#!" id="al_pro">Alta</a></li>
+                                <li><a href="#!" id="mo_pro">Modificación</a></li>
+                                <li><a href="#!" id="li_pro">Listado</a></li>
+                                <li><a href="#!" id="bo_pro">Borrado</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                     <li class="white">
+                        <a class="collapsible-header">Asignaturas<i class="material-icons"></i></a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a href="#!" id="al_asig">Alta</a></li>
+                                <li><a href="#!" id="pro_asig">Asignación profesor/asignatura</a></li>
+                                <li><a href="#!" id="alu_asig">Matriculaciones alumnos</a></li>
+                                <li><a href="#!" id="bor_asig">Borrado asignaturas</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="#!" id="creditos">Sobre esta aplicación</a></li>
+                    <li><a href="#!" id="ayuda">Manual usuario</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            
+            <div id="main" class="panel" hidden>
+                Vista inicial de la aplicación
+            </div>
+            <div id="formularioAlumno" class="panel" hidden>
+                Formulario para añadir/editar un alumno
+            </div>
+            <div id="listadoAlumno" class="panel" hidden>
+                Listado de alumnos y gestión de modificaciones/borrado
+            </div>
+            <div id="formularioProfesor" class="panel" hidden>
+                Formulario para añadir/editar un alumno
+            </div>
+            <div id="listadoProfesor" class="panel" hidden>
+                Listado de alumnos y gestión de modificaciones/borrado
+            </div>
+            
+            
+            <div id="error" class="panel" hidden>
+                Caja para la gestión de errores (mostrar errores y/o avisos)
+            </div>
+            
+        </div>
+    </body>
+</html>
