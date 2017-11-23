@@ -7,16 +7,20 @@ package com.iesvdc.acceso.dao;
 
 import com.iesvdc.acceso.pojo.Alumno;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 
 /**
  *
  * @author profesor
  */
 public class AlumnoDAOImpl implements AlumnoDAO {
+
+    public AlumnoDAOImpl() {
+    }
     
     Conexion conex;
     
@@ -31,6 +35,10 @@ public class AlumnoDAOImpl implements AlumnoDAO {
     public void create(Alumno al) throws DAOException {
         try {
             Connection con = obtenerConexion();
+            PreparedStatement pstm = con.prepareStatement("INSERT INTO ALUMNO VALUES(NULL, ?,?)");
+            pstm.setString(1, al.getNombre());
+            pstm.setString(2, al.getApellido());
+            pstm.execute();
             con.close();
         } catch (SQLException ex) {
             throw new DAOException("Alumno:Crear: No puedo conectar a la BBDD");

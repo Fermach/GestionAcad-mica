@@ -13,6 +13,7 @@ import java.util.List;
  * @author profesor
  */
 public interface AlumnoDAO {
+    
     public void create(Alumno al) throws DAOException;
     public void update(Alumno old_al, Alumno new_al) throws DAOException;
     public void update(Integer old_id, Alumno new_al) throws DAOException;
