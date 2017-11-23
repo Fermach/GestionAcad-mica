@@ -15,15 +15,20 @@ $(document).ready(
             // $(".button-collapse").sideNav();
             $('.collapsible').collapsible();
             
-            $("#al_pro").click( function(){
-                $(".panel").hide();
-                $("#formularioAlumno").show();
-            });
-            
             
         });
         
-        
+        console.log($('[id*=menu_]'));
+
+$("[id*=menu_]").each(function () {
+    var $id_menu = $(this).attr('id');
+    var id_panel = $id_menu.attr('id').replace('menu_', 'panel_');
+    $("#"+id_panel).click( function(){
+        $(".panel").hide();
+        $("#"+id_panel).show();
+    });
+    console.log("id_menu::"+ $(this) + "  id_panel"+id_panel);
+});
         
         
         

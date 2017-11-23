@@ -66,8 +66,8 @@ La automatización de tareas es muy recomendable. Según el grado de dificultad:
 clonación desde GitHub, GitBucket... y/o añadir scripts (bash, poweshell...) o bien 
 detallar las instrucciones **en una receta en el README** del repositorio.
 2. La opción más completa es usar un sistema automático, tipo gestión de proyectos
-como [Maven[https://maven.apache.org/]] o bien automatización de tareas como 
-[Gradle[https://gradle.org/]]. En clase ya hemos hecho una pequeña introducción a 
+como [![Maven](https://maven.apache.org/)] o bien automatización de tareas como 
+[![Gradle](https://gradle.org/)]. En clase ya hemos hecho una pequeña introducción a 
 gestión de proyectos desde el pom.xml con Maven.
 
 ### Breve manual de usuario
@@ -125,8 +125,6 @@ Materialize CSS, debes tener en el head de tu página algo parecido a esto:
 ### Front-end: Controlador con jQuery 
 
 
-
-## Descripción detallada
 
 
 
