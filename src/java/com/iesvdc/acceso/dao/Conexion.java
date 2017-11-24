@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -36,8 +38,17 @@ public class Conexion {
     public static final int POSTGRE=4;
     
     Conexion() throws DAOException {
-        try (InputStream in =new FileInputStream(new File("db.prop"))  ) {
-            props.load(in);
+        
+        try (InputStream in =new FileInputStream(new File("/home/profesor/usr/apache-tomcat-8.5.23/webapps/GestionAcademica/WEB-INF/lib/db.prop"))  ) {
+        // try (InputStream in = classLoader.getResourceAsStream("/WEB-INF/lib/db.prop")){        
+        // try (InputStream in = getClass().getClassLoader().getResourceAsStream("/WEB-INF/lib/db.prop")){
+        // try (InputStream in = Files.newInputStream(FileSystems.getDefault().getPath(System.getProperty("catalina.base")+ File.separator + "/webapps/GestionAcademica/WEB-INF/lib/db.prop")); ) {
+            props = new Properties();
+            if (in!=null) {
+                props.load(in);               
+            } else {
+                throw new DAOException("Conexion: No puedo cargar el archivo de configuracion NULL");
+            }
             in.close();
         } catch (IOException ex) {
             throw new DAOException("Conexion: No puedo cargar el archivo de configuracion");

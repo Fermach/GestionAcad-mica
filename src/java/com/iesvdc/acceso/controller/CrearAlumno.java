@@ -10,9 +10,12 @@ import com.iesvdc.acceso.dao.AlumnoDAOImpl;
 import com.iesvdc.acceso.dao.DAOException;
 import com.iesvdc.acceso.pojo.Alumno;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +26,13 @@ import javax.servlet.http.HttpServletResponse;
  * @author profesor
  */
 public class CrearAlumno extends HttpServlet {
-
+    private Properties props;
+    private Integer driver;
+    private String host;
+    private String puerto;
+    private String base_datos;
+    private String usuario;
+    private String password;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -50,7 +59,6 @@ public class CrearAlumno extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -66,14 +74,41 @@ public class CrearAlumno extends HttpServlet {
         Alumno al;
         AlumnoDAO al_dao;
         
-        al=new Alumno("Juan", "Sin Miedo");
-        
-        al_dao=new AlumnoDAOImpl();
-        
-        try {
-            al_dao.create(al);
-        } catch (DAOException ex) {
-            Logger.getLogger(CrearAlumno.class.getName()).log(Level.SEVERE, null, ex);
+        // Cargar un fichero de texto desde un Servlet
+	/*ServletContext context = getServletContext();
+	InputStream resourceContent = context.getResourceAsStream("/WEB-INF/lib/db.prop");
+        props = new Properties();
+        props.load(resourceContent);
+        this.base_datos = props.getProperty("base_datos");
+        this.driver     = Integer.parseInt(props.getProperty("driver"));
+        this.host       = props.getProperty("host");
+        this.password   = props.getProperty("password");
+        this.usuario    = props.getProperty("usuario");
+        this.puerto     = props.getProperty("puerto");  
+        */
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CrearAlumno</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            
+            al=new Alumno("Juan", "Sin Miedo");
+
+            al_dao=new AlumnoDAOImpl();
+
+            try {
+                al_dao.create(al);
+            } catch (DAOException ex) {
+                out.println(ex.getLocalizedMessage());
+                Logger.getLogger(CrearAlumno.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
