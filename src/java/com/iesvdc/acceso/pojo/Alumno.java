@@ -5,13 +5,23 @@
  */
 package com.iesvdc.acceso.pojo;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author profesor
  */
+@XmlRootElement(name = "alumno")
+@XmlAccessorType (XmlAccessType.FIELD)
 public class Alumno {
+    @XmlElement
     private Integer id;
+    @XmlElement
     private String nombre;
+    @XmlElement
     private String apellido;
 
     public Alumno() {

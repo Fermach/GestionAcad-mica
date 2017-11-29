@@ -39,9 +39,9 @@ public class Conexion {
     
     Conexion() throws DAOException {
         
-        try (InputStream in =new FileInputStream(new File("/home/profesor/usr/apache-tomcat-8.5.23/webapps/GestionAcademica/WEB-INF/lib/db.prop"))  ) {
+        // try (InputStream in =new FileInputStream(new File("/home/profesor/usr/apache-tomcat-8.5.23/webapps/GestionAcademica/WEB-INF/lib/db.prop"))  ) {
         // try (InputStream in = classLoader.getResourceAsStream("/WEB-INF/lib/db.prop")){        
-        // try (InputStream in = getClass().getClassLoader().getResourceAsStream("/WEB-INF/lib/db.prop")){
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("db.prop")){
         // try (InputStream in = Files.newInputStream(FileSystems.getDefault().getPath(System.getProperty("catalina.base")+ File.separator + "/webapps/GestionAcademica/WEB-INF/lib/db.prop")); ) {
             props = new Properties();
             if (in!=null) {
@@ -60,23 +60,27 @@ public class Conexion {
     Connection getConexion() throws DAOException{
        Connection con = null;
        String jdbcUrl = null; 
-       switch(driver){
+       
+       
+        try {
+            switch(driver){
             case ORACLE:
+                Class.forName("oracle.jdbc.driver.OracleDriver");
                 jdbcUrl = "jdbc:oracle:thin:@" + this.host + ":" + 
                             this.puerto  + ":" + this.base_datos;
                 break;
             case MYSQL:
+                Class.forName("com.mysql.jdbc.Driver");
                 jdbcUrl = "jdbc:mysql://" + this.host + ":" + 
-                            this.puerto  + ":" + this.base_datos;
+                            this.puerto  + "/" + this.base_datos;
                 break;
             default:
                 throw new DAOException("Conexion: El driver seleccionado no está disponible");
         }
-       
-        try {
             con = DriverManager.getConnection(jdbcUrl, usuario, password);
-        } catch (SQLException ex) {
-            throw new DAOException("Conexion: No se puede conectar a la BBDD");
+        } catch (SQLException|ClassNotFoundException ex) {
+            String msg = "Conexion: No se puede conectar a la BBDD \n"+ex.getLocalizedMessage();
+            throw new DAOException(msg);
         }
         
         return con;
