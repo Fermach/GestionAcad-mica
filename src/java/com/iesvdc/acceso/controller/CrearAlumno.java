@@ -33,32 +33,7 @@ public class CrearAlumno extends HttpServlet {
     private String base_datos;
     private String usuario;
     private String password;
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CrearAlumno</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CrearAlumno at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -68,7 +43,7 @@ public class CrearAlumno extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // processRequest(request, response);
         Alumno al;
@@ -96,7 +71,10 @@ public class CrearAlumno extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             
-            al=new Alumno("Juan", "Sin Miedo");
+            String nombre = request.getParameter("nombre");
+            String apellido = request.getParameter("apellido");
+            
+            al=new Alumno(nombre, apellido);
 
             al_dao=new AlumnoDAOImpl();
 
@@ -122,11 +100,35 @@ public class CrearAlumno extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        // pintar formulario
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CrearAlumno</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<div class=\"well\">\n" +
+"		<form role=\"form\" method=\"post\">\n" +
+"		  <div class=\"form-group\">\n" +
+"		    <label for=\"nombre\">Nombre:</label>\n" +
+"		    <input type=\"nombre\" class=\"form-control\" name=\"nombre\">\n" +
+"		  </div>	\n" +
+"		  <div class=\"form-group\">\n" +
+"		    <label for=\"apellido\">Apellidos:</label>\n" +
+"		    <input type=\"apellido\" class=\"form-control\" name=\"apellido\">\n" +
+"		  </div>		  \n" +
+"		  <button type=\"submit\" class=\"btn btn-default\">Submit</button>\n" +
+"		</form>\n" +
+"	</div>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
-
     /**
      * Returns a short description of the servlet.
      *

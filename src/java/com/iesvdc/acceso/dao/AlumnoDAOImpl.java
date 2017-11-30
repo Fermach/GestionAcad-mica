@@ -38,12 +38,16 @@ public class AlumnoDAOImpl implements AlumnoDAO {
     @Override
     public void create(Alumno al) throws DAOException {
         try {
-            Connection con = obtenerConexion();
-            PreparedStatement pstm = con.prepareStatement("INSERT INTO ALUMNO VALUES(NULL, ?,?)");
-            pstm.setString(1, al.getNombre());
-            pstm.setString(2, al.getApellido());
-            pstm.execute();
-            con.close();
+            if (al.getApellido().length()>=3 && al.getNombre().length()>1 ) {
+                Connection con = obtenerConexion();
+                PreparedStatement pstm = con.prepareStatement("INSERT INTO ALUMNO VALUES(NULL, ?,?)");
+                pstm.setString(1, al.getNombre());
+                pstm.setString(2, al.getApellido());
+                pstm.execute();
+                con.close();
+            } else {
+                throw new DAOException("Alumno:Crear: El nombre es demasiado corto");
+            }
         } catch (SQLException ex) {
             throw new DAOException("Alumno:Crear: No puedo conectar a la BBDD");
         }
@@ -51,18 +55,7 @@ public class AlumnoDAOImpl implements AlumnoDAO {
 
     @Override
     public void update(Alumno old_al, Alumno new_al) throws DAOException {
-        try {
-            Connection con = obtenerConexion();
-            PreparedStatement pstm = con.prepareStatement(" UPDATE ALUMNO SET id=?, nombre=?, apellido=? WHERE id=?");
-            pstm.setInt(4, old_al.getId());
-            pstm.setInt(1, new_al.getId());
-            pstm.setString(2, new_al.getNombre());
-            pstm.setString(3, new_al.getApellido());
-            pstm.execute();
-            con.close();
-        } catch (SQLException ex) {
-            throw new DAOException("Alumno:Update: No puedo conectar a la BBDD");
-        }
+        update(old_al.getId(),new_al);
     }
 
     @Override
@@ -145,6 +138,25 @@ public class AlumnoDAOImpl implements AlumnoDAO {
             Connection con = obtenerConexion();
             PreparedStatement pstm = con.prepareStatement("SELECT * FROM ALUMNO WHERE apellido=?");
             pstm.setString(1, apellido);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                al = new Alumno(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellido"));
+                list_al.add(al);
+            }
+            con.close();
+        } catch (SQLException ex) {
+            throw new DAOException("Alumno:findByApellido: No puedo conectar a la BBDD ");
+        }
+        return list_al;
+    }
+    
+    @Override
+    public List<Alumno> findAll() throws DAOException {
+        Alumno al;
+        List<Alumno> list_al = new ArrayList<>();
+        try {
+            Connection con = obtenerConexion();
+            PreparedStatement pstm = con.prepareStatement("SELECT * FROM ALUMNO");
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
                 al = new Alumno(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellido"));

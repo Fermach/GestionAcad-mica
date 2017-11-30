@@ -25,7 +25,7 @@ import javax.ws.rs.core.MediaType;
 public class AlumnoResource {
     
     @GET
-    @Path("id/{id}")
+    @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Alumno getAlumnoById(@PathParam("id") String id) {
         AlumnoDAO al_dao = new AlumnoDAOImpl();
