@@ -11,6 +11,7 @@ import com.iesvdc.acceso.dao.DAOException;
 import com.iesvdc.acceso.pojo.Alumno;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -84,8 +85,18 @@ public class LeerAlumno extends HttpServlet {
             al_dao=new AlumnoDAOImpl();
             
             try {
-                al = al_dao.findById(1);
-                out.println("Alumno encontrado con éxito: "+al.getNombre()+" "+al.getApellido());
+                List<Alumno> li_al = al_dao.findAll();
+                out.println("<ol>");
+                for (Alumno alumno : li_al) {
+                    out.println("<li>");
+                    out.println(alumno.getApellido()+" "+alumno.getNombre());
+                    out.println("<a href=\"ActualizarAlumno?id="+alumno.getId()+
+                            "&nombre="+alumno.getNombre()+"&apellido="+
+                            alumno.getApellido()+"\">"+"actualizar</a>");
+                    out.println("<a href=\"BorrarAlumno?id="+alumno.getId()+"\">"+"borrar</a>");
+                    out.println("</li>");
+                }
+                out.println("</ol>");
             } catch (DAOException ex) {
                 Logger.getLogger(ex.getLocalizedMessage());
             }
