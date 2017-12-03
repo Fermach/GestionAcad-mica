@@ -8,6 +8,14 @@
         <servlet-name>LeerAlumno</servlet-name>
         <servlet-class>com.iesvdc.acceso.controller.LeerAlumno</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ActualizarAlumno</servlet-name>
+        <servlet-class>com.iesvdc.acceso.controller.ActualizarAlumno</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BorrarAlumno</servlet-name>
+        <servlet-class>com.iesvdc.acceso.controller.BorrarAlumno</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CrearAlumno</servlet-name>
         <url-pattern>/CrearAlumno</url-pattern>
@@ -33,10 +41,17 @@
         <servlet-name>LeerAlumno</servlet-name>
         <url-pattern>/LeerAlumno</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActualizarAlumno</servlet-name>
+        <url-pattern>/ActualizarAlumno</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BorrarAlumno</servlet-name>
+        <url-pattern>/BorrarAlumno</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    
 </web-app>

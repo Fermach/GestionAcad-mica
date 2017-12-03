@@ -22,6 +22,7 @@ public interface AlumnoDAO {
     public List<Alumno> findByNombre(String nombre) throws DAOException;
     public List<Alumno> findByApellido(String apellido) throws DAOException;
     public List<Alumno> findAll() throws DAOException;
+    public List<Alumno> findByNombreApellido(String nombre, String apellido) throws DAOException;
 }
 
 

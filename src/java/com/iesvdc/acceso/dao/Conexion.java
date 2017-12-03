@@ -5,18 +5,12 @@
  */
 package com.iesvdc.acceso.dao;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *  jdbc:<DRIVER>://<HOST>:<PORT>/<DATABASE_NAME>
@@ -60,9 +54,7 @@ public class Conexion {
     Connection getConexion() throws DAOException{
        Connection con = null;
        String jdbcUrl = null; 
-       
-       
-        try {
+       try {
             switch(driver){
             case ORACLE:
                 Class.forName("oracle.jdbc.driver.OracleDriver");

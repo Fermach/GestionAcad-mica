@@ -151,6 +151,28 @@ public class AlumnoDAOImpl implements AlumnoDAO {
     }
     
     @Override
+    public List<Alumno> findByNombreApellido(String nombre, String apellido) throws DAOException {
+        Alumno al;
+        List<Alumno> list_al = new ArrayList<>();
+        try {
+            Connection con = obtenerConexion();
+            PreparedStatement pstm = con.prepareStatement(
+                    "SELECT * FROM ALUMNO WHERE nombre=? AND apellido=?");
+            pstm.setString(1, nombre);
+            pstm.setString(2, apellido);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                al = new Alumno(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellido"));
+                list_al.add(al);
+            }
+            con.close();
+        } catch (SQLException ex) {
+            throw new DAOException("Alumno:findByApellido: No puedo conectar a la BBDD ");
+        }
+        return list_al;
+    }
+    
+    @Override
     public List<Alumno> findAll() throws DAOException {
         Alumno al;
         List<Alumno> list_al = new ArrayList<>();

@@ -28,7 +28,7 @@ public class AlumnoResource {
     @Path("/")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Alumno> getAlumnos() {
-         AlumnoDAO al_dao = new AlumnoDAOImpl();
+        AlumnoDAO al_dao = new AlumnoDAOImpl();
         List<Alumno> list_al;
         try {
             list_al = al_dao.findAll();
@@ -77,6 +77,23 @@ public class AlumnoResource {
         List<Alumno> list_al;
         try {
             list_al = al_dao.findByNombre(nombre);
+        } catch (DAOException ex) {
+            list_al = new ArrayList<>();
+            System.out.println(ex.getLocalizedMessage());
+        }
+        return list_al;
+    }
+    
+    @GET
+    @Path("nombre/{nombre}/apellido/{apellido}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<Alumno> getAlumnoByNombreApellido(
+            @PathParam("nombre") String nombre,
+            @PathParam("apellido") String apellido) {
+        AlumnoDAO al_dao = new AlumnoDAOImpl();
+        List<Alumno> list_al;
+        try {
+            list_al = al_dao.findByNombreApellido(nombre, apellido);
         } catch (DAOException ex) {
             list_al = new ArrayList<>();
             System.out.println(ex.getLocalizedMessage());
