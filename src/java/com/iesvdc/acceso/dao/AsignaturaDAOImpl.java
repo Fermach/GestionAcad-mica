@@ -10,6 +10,11 @@ import com.iesvdc.acceso.pojo.Alumno;
 import com.iesvdc.acceso.pojo.Asignatura;
 import com.iesvdc.acceso.pojo.ProAsi;
 import com.iesvdc.acceso.pojo.Profesor;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,9 +23,35 @@ import java.util.List;
  */
 public class AsignaturaDAOImpl implements AsignaturaDAO {
 
+    Conexion conex;
+
+    private Connection obtenerConexion() throws DAOException {
+        if (conex == null) {
+            conex = new Conexion();
+        }
+        return conex.getConexion();
+    }
+
+    public AsignaturaDAOImpl() {
+    }
+
     @Override
     public void create(Asignatura as) throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            if (as.getCiclo().length() > 3 || as.getCurso() > 1 || as.getNombre().length() > 3) {
+                Connection con = obtenerConexion();
+                PreparedStatement pstm = con.prepareStatement("INSERT INTO ASIGNATURA VALUES(NULL, ?,?,?)");
+                pstm.setString(1, as.getNombre());
+                pstm.setInt(2, as.getCurso());
+                pstm.setString(3, as.getCiclo());
+                pstm.execute();
+                con.close();
+            } else {
+                throw new DAOException("Asignatura:Crear: El nombre es demasiado corto");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Asignatura:Crear: No puedo conectar a la BBDD");
+        }
     }
 
     @Override
@@ -35,7 +66,22 @@ public class AsignaturaDAOImpl implements AsignaturaDAO {
 
     @Override
     public List<Asignatura> findAll() throws DAOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Asignatura as;
+        List<Asignatura> list_as = new ArrayList<>();
+        try {
+            Connection con = obtenerConexion();
+            PreparedStatement pstm = con.prepareStatement("SELECT * FROM ASIGNATURA");
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                as = new Asignatura(rs.getString("nombre"),
+                        rs.getInt("id"), rs.getInt("curso"), rs.getString("ciclo"));
+                list_as.add(as);
+            }
+            con.close();
+        } catch (SQLException ex) {
+            throw new DAOException("Alumno:findByApellido: No puedo conectar a la BBDD ");
+        }
+        return list_as;
     }
 
     @Override
@@ -97,5 +143,5 @@ public class AsignaturaDAOImpl implements AsignaturaDAO {
     public List<ProAsi> findProAsi(Asignatura as) throws DAOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

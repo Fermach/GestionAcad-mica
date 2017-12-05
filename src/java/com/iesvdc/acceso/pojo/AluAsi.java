@@ -10,7 +10,8 @@ package com.iesvdc.acceso.pojo;
  * @author profesor
  */
 public class AluAsi {
-   /*  ASIGNATURA INT,
+
+    /*  ASIGNATURA INT,
 	ALUMNO INT,
         FALTAS INT,
 	PRIMARY KEY(ASIGNATURA,ALUMNO),
@@ -21,7 +22,7 @@ public class AluAsi {
     private int faltas;
 
     public AluAsi() {
-        
+
     }
 
     public AluAsi(int asignatura, int alumno, int faltas) {
@@ -29,7 +30,7 @@ public class AluAsi {
         this.alumno = alumno;
         this.faltas = faltas;
     }
-    
+
     public int getAsignatura() {
         return asignatura;
     }
@@ -53,5 +54,5 @@ public class AluAsi {
     public void setFaltas(int faltas) {
         this.faltas = faltas;
     }
-    
+
 }

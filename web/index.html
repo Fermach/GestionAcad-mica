@@ -6,6 +6,8 @@
         <link rel = "stylesheet" href = "css/material.css">
         <script src="js/materialize.min.js" type="text/javascript"></script>
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+        <script src="js/controller.js" type="text/javascript"></script>
+        <script src="js/alumno.js" type="text/javascript"></script>
         <script src="js/index.js" type="text/javascript"></script>
         <title>Gestión Académica</title>
         <meta charset="UTF-8">
@@ -24,9 +26,9 @@
                         <div class="collapsible-body">
                             <ul>
                                 <li><a href="#!" id="menu_al_alu">Alta</a></li>
-                                <li><a href="#!" id="menu_mo_alu">Modificación</a></li>
-                                <li><a href="#!" id="menu_li_alu">Listado</a></li>
-                                <li><a href="#!" id="menu_bo_alu">Borrado</a></li>
+                                <li><a href="#!" id="menu_mo_alu" onclick="$.alumno.AlumnoUpdateREST();">Modificación</a></li>
+                                <li><a href="#!" id="menu_li_alu" onclick="$.alumno.AlumnoReadREST();">Listado</a></li>
+                                <li><a href="#!" id="menu_bo_alu" onclick="$.alumno.AlumnoDeleteREST();">Borrado</a></li>
                             </ul>
                         </div>
                     </li>
@@ -41,7 +43,7 @@
                             </ul>
                         </div>
                     </li>
-                     <li class="white">
+                    <li class="white">
                         <a class="collapsible-header">Asignaturas<i class="material-icons"></i></a>
                         <div class="collapsible-body">
                             <ul>
@@ -59,20 +61,48 @@
         </nav>
 
         <div class="container">
-            
+
             <div id="panel_main" class="panel" hidden>
                 Vista inicial de la aplicación
             </div>
             <!-- ALUMNADO -->
             <div id="panel_al_alu" class="panel" hidden>
-				<h1>Alta alumnos</h1>
-                Formulario para añadir/editar un alumno
+                <h3>Create Alumno</h3>
+                <div class="input">
+                    <form>
+                        <div class="input">
+                            <input type="text" id="c_al_nombre" class="input-field" placeholder="Nombre del Alumno" >
+                        </div>
+                        <div class="input">
+                            <input type="text" id="c_al_apellidos" class="input-field" placeholder="Apellidos del Alumno"  >
+                        </div>
+                        <div class="input">
+                            <div class="btn" onclick="$.alumno.AlumnoCreateREST()">Enviar!</div>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div id="panel_li_alu" class="panel" hidden>
                 Listado de alumnos y gestión de modificaciones/borrado
             </div>
             <div id="panel_mo_alu" class="panel" hidden>
-                Formulario para añadir/editar un alumno
+                <h3>Update Alumno</h3>
+                <div class="input">
+                    <form>
+                        <div class="input">
+                            <input type="hidden" id="u_al_id" class="input-field">
+                        </div> 
+                        <div class="input">
+                            <input type="text" id="u_al_nombre" class="input-field" placeholder="Nombre del Alumno" >
+                        </div>
+                        <div class="input">
+                            <input type="text" id="u_al_apellidos" class="input-field" placeholder="Apellidos del Alumno"  >
+                        </div>
+                        <div class="input">
+                            <div class="btn" onclick="$.alumno.AlumnoUpdateREST(1,1)">Enviar!</div>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div id="panel_bo_alu" class="panel" hidden>
                 Formulario para borrar un alumno
@@ -91,8 +121,8 @@
                 Formulario para borrar un profesor
             </div>
             <!-- GESTION ASIGNATURAS -->
-            
-             <div id="panel_al_asig" class="panel" hidden>
+
+            <div id="panel_al_asig" class="panel" hidden>
                 Formulario para añadir/editar una asignatura
             </div>
             <div id="panel_pro_asig" class="panel" hidden>
@@ -104,17 +134,17 @@
             <div id="panel_bor_asig" class="panel" hidden>
                 Listado de asignaturas y gestión de modificaciones/borrado
             </div>
-            
-             <div id="panel_ayuda" class="panel" hidden>
+
+            <div id="panel_ayuda" class="panel" hidden>
                 Caja para la gestión de errores (mostrar errores y/o avisos)
             </div>
-             <div id="panel_creditos" class="panel" hidden>
+            <div id="panel_creditos" class="panel" hidden>
                 Caja para la gestión de errores (mostrar errores y/o avisos)
             </div>
             <div id="panel_error" class="panel" hidden>
                 Caja para la gestión de errores (mostrar errores y/o avisos)
             </div>
-            
+
         </div>
     </body>
 </html>

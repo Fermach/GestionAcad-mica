@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Juangu <jgutierrez at iesvirgendelcarmen.coms>
  */
-
 @WebServlet({"/AlumnoRead"})
 public class LeerAlumno extends HttpServlet {
 
@@ -45,7 +44,7 @@ public class LeerAlumno extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LeerAlumno</title>");            
+            out.println("<title>Servlet LeerAlumno</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LeerAlumno at " + request.getContextPath() + "</h1>");
@@ -54,15 +53,15 @@ public class LeerAlumno extends HttpServlet {
         }
     }
 
-   @Override
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // processRequest(request, response);
         Alumno al;
         AlumnoDAO al_dao;
-        
+
         // Cargar un fichero de texto desde un Servlet
-	/*ServletContext context = getServletContext();
+        /*ServletContext context = getServletContext();
 	InputStream resourceContent = context.getResourceAsStream("/WEB-INF/lib/db.prop");
         props = new Properties();
         props.load(resourceContent);
@@ -72,38 +71,37 @@ public class LeerAlumno extends HttpServlet {
         this.password   = props.getProperty("password");
         this.usuario    = props.getProperty("usuario");
         this.puerto     = props.getProperty("puerto");  
-        */
+         */
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CrearAlumno</title>");            
+            out.println("<title>Servlet CrearAlumno</title>");
             out.println("</head>");
             out.println("<body>");
-            
-            // al=new Alumno("Juan", "Sin Miedo");
 
-            al_dao=new AlumnoDAOImpl();
-            
+            // al=new Alumno("Juan", "Sin Miedo");
+            al_dao = new AlumnoDAOImpl();
+
             try {
                 List<Alumno> li_al = al_dao.findAll();
                 out.println("<ol>");
                 for (Alumno alumno : li_al) {
                     out.println("<li>");
-                    out.println(alumno.getApellido()+" "+alumno.getNombre());
-                    out.println("<a href=\"ActualizarAlumno?id="+alumno.getId()+
-                            "&nombre="+alumno.getNombre()+"&apellido="+
-                            alumno.getApellido()+"\">"+"actualizar</a>");
-                    out.println("<a href=\"BorrarAlumno?id="+alumno.getId()+"\">"+"borrar</a>");
+                    out.println(alumno.getApellido() + " " + alumno.getNombre());
+                    out.println("<a href=\"ActualizarAlumno?id=" + alumno.getId()
+                            + "&nombre=" + alumno.getNombre() + "&apellido="
+                            + alumno.getApellido() + "\">" + "actualizar</a>");
+                    out.println("<a href=\"BorrarAlumno?id=" + alumno.getId() + "\">" + "borrar</a>");
                     out.println("</li>");
                 }
                 out.println("</ol>");
             } catch (DAOException ex) {
                 Logger.getLogger(ex.getLocalizedMessage());
             }
-            
+
             out.println("</body>");
             out.println("</html>");
         }

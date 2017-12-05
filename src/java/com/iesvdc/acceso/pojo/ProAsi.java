@@ -10,5 +10,5 @@ package com.iesvdc.acceso.pojo;
  * @author profesor
  */
 public class ProAsi {
-    
+
 }

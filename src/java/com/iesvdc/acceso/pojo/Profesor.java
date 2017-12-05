@@ -15,8 +15,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author profesor
  */
 @XmlRootElement(name = "profesor")
-@XmlAccessorType (XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Profesor {
+
     @XmlElement
     private Integer id;
     @XmlElement
@@ -32,7 +33,6 @@ public class Profesor {
         this.nombre = nombre;
         this.apellido = apellido;
     }
-    
 
     public Integer getId() {
         return id;
@@ -57,10 +57,10 @@ public class Profesor {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-    
+
     @Override
     public String toString() {
         return "ProdesorPOJO:{" + "id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + '}';
     }
-    
+
 }

@@ -25,20 +25,20 @@ public class AlumnoDAOImpl implements AlumnoDAO {
 
     public AlumnoDAOImpl() {
     }
-    
+
     Conexion conex;
-    
-    private Connection obtenerConexion() throws DAOException{
-        if (conex==null) {
+
+    private Connection obtenerConexion() throws DAOException {
+        if (conex == null) {
             conex = new Conexion();
-        } 
+        }
         return conex.getConexion();
     }
-    
+
     @Override
     public void create(Alumno al) throws DAOException {
         try {
-            if (al.getApellido().length()>=3 && al.getNombre().length()>1 ) {
+            if (al.getApellido().length() >= 3 && al.getNombre().length() > 1) {
                 Connection con = obtenerConexion();
                 PreparedStatement pstm = con.prepareStatement("INSERT INTO ALUMNO VALUES(NULL, ?,?)");
                 pstm.setString(1, al.getNombre());
@@ -55,7 +55,7 @@ public class AlumnoDAOImpl implements AlumnoDAO {
 
     @Override
     public void update(Alumno old_al, Alumno new_al) throws DAOException {
-        update(old_al.getId(),new_al);
+        update(old_al.getId(), new_al);
     }
 
     @Override
@@ -104,7 +104,7 @@ public class AlumnoDAOImpl implements AlumnoDAO {
             al = new Alumno(rs.getInt("id"), rs.getString("nombre"), rs.getString("apellido"));
             con.close();
         } catch (SQLException ex) {
-            al = new Alumno(-1,"error","error");
+            al = new Alumno(-1, "error", "error");
             throw new DAOException("Alumno:findById: No puedo conectar a la BBDD ");
         }
         return al;
@@ -149,7 +149,7 @@ public class AlumnoDAOImpl implements AlumnoDAO {
         }
         return list_al;
     }
-    
+
     @Override
     public List<Alumno> findByNombreApellido(String nombre, String apellido) throws DAOException {
         Alumno al;
@@ -171,7 +171,7 @@ public class AlumnoDAOImpl implements AlumnoDAO {
         }
         return list_al;
     }
-    
+
     @Override
     public List<Alumno> findAll() throws DAOException {
         Alumno al;
@@ -190,6 +190,5 @@ public class AlumnoDAOImpl implements AlumnoDAO {
         }
         return list_al;
     }
-    
-    
+
 }

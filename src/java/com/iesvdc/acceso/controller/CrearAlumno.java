@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author profesor
  */
 public class CrearAlumno extends HttpServlet {
+
     private Properties props;
     private Integer driver;
     private String host;
@@ -33,7 +34,7 @@ public class CrearAlumno extends HttpServlet {
     private String base_datos;
     private String usuario;
     private String password;
-    
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -48,9 +49,9 @@ public class CrearAlumno extends HttpServlet {
         // processRequest(request, response);
         Alumno al;
         AlumnoDAO al_dao;
-        
+
         // Cargar un fichero de texto desde un Servlet
-	/*ServletContext context = getServletContext();
+        /*ServletContext context = getServletContext();
 	InputStream resourceContent = context.getResourceAsStream("/WEB-INF/lib/db.prop");
         props = new Properties();
         props.load(resourceContent);
@@ -60,23 +61,23 @@ public class CrearAlumno extends HttpServlet {
         this.password   = props.getProperty("password");
         this.usuario    = props.getProperty("usuario");
         this.puerto     = props.getProperty("puerto");  
-        */
+         */
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CrearAlumno</title>");            
+            out.println("<title>Servlet CrearAlumno</title>");
             out.println("</head>");
             out.println("<body>");
-            
+
             String nombre = request.getParameter("nombre");
             String apellido = request.getParameter("apellido");
-            
-            al=new Alumno(nombre, apellido);
 
-            al_dao=new AlumnoDAOImpl();
+            al = new Alumno(nombre, apellido);
+
+            al_dao = new AlumnoDAOImpl();
 
             try {
                 al_dao.create(al);
@@ -85,7 +86,7 @@ public class CrearAlumno extends HttpServlet {
                 out.println(ex.getLocalizedMessage());
                 Logger.getLogger(CrearAlumno.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             out.println("</body>");
             out.println("</html>");
         }
@@ -109,26 +110,27 @@ public class CrearAlumno extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CrearAlumno</title>");            
+            out.println("<title>Servlet CrearAlumno</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<div class=\"well\">\n" +
-"		<form role=\"form\" method=\"post\">\n" +
-"		  <div class=\"form-group\">\n" +
-"		    <label for=\"nombre\">Nombre:</label>\n" +
-"		    <input type=\"nombre\" class=\"form-control\" name=\"nombre\">\n" +
-"		  </div>	\n" +
-"		  <div class=\"form-group\">\n" +
-"		    <label for=\"apellido\">Apellidos:</label>\n" +
-"		    <input type=\"apellido\" class=\"form-control\" name=\"apellido\">\n" +
-"		  </div>		  \n" +
-"		  <button type=\"submit\" class=\"btn btn-default\">Submit</button>\n" +
-"		</form>\n" +
-"	</div>");
+            out.println("<div class=\"well\">\n"
+                    + "		<form role=\"form\" method=\"post\">\n"
+                    + "		  <div class=\"form-group\">\n"
+                    + "		    <label for=\"nombre\">Nombre:</label>\n"
+                    + "		    <input type=\"nombre\" class=\"form-control\" name=\"nombre\">\n"
+                    + "		  </div>	\n"
+                    + "		  <div class=\"form-group\">\n"
+                    + "		    <label for=\"apellido\">Apellidos:</label>\n"
+                    + "		    <input type=\"apellido\" class=\"form-control\" name=\"apellido\">\n"
+                    + "		  </div>		  \n"
+                    + "		  <button type=\"submit\" class=\"btn btn-default\">Submit</button>\n"
+                    + "		</form>\n"
+                    + "	</div>");
             out.println("</body>");
             out.println("</html>");
         }
     }
+
     /**
      * Returns a short description of the servlet.
      *

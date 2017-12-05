@@ -15,8 +15,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author profesor
  */
 @XmlRootElement(name = "alumno")
-@XmlAccessorType (XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Alumno {
+
     @XmlElement
     private Integer id;
     @XmlElement
@@ -29,7 +30,7 @@ public class Alumno {
         //this.nombre = null;
         //this.apellido = null;
     }
-    
+
     public Alumno(String nombre, String apellido) {
         //this.id = null;
         this.nombre = nombre;

@@ -15,8 +15,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author profesor
  */
 @XmlRootElement(name = "asignatura")
-@XmlAccessorType (XmlAccessType.FIELD)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Asignatura {
+
     @XmlElement
     String nombre;
     @XmlElement
@@ -72,7 +73,5 @@ public class Asignatura {
     public String toString() {
         return "Asignatura{" + "nombre=" + nombre + ", id=" + id + ", curso=" + curso + ", ciclo=" + ciclo + '}';
     }
-    
-    
-    
+
 }
