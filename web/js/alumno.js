@@ -34,6 +34,9 @@ $.alumno.AlumnoReadREST = function () {
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader ("Authorization", "Basic " + btoa("admin" + ":" + "admin"));
+        },
         success: function (json) {
             $($.alumno.panel_list).empty();
             $($.alumno.panel_list).append('<h3>Listado de Alumnos</h3>');
@@ -74,6 +77,9 @@ $.alumno.AlumnoCreateREST = function () {
             dataType: 'json',
             contentType: "application/json",
             data: JSON.stringify(datos),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", "Basic " + btoa("admin" + ":" + "admin"));
+            },
             success: function (result, status, jqXHR) {
                 // probamos que se ha actualizado cargando de nuevo la lista -no es necesario-
                 $.alumno.AlumnoReadREST();
@@ -102,6 +108,9 @@ $.alumno.AlumnoDeleteREST = function (id) {
             type: 'DELETE',
             dataType: 'json',
             contentType: "application/json",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", "Basic " + btoa("admin" + ":" + "admin"));
+            },
             // data: JSON.stringify(datos),
             success: function (result, status, jqXHR) {
                 // probamos que se ha actualizado cargando de nuevo la lista -no es necesario-
@@ -119,6 +128,9 @@ $.alumno.AlumnoDeleteREST = function (id) {
             type: 'GET',
             dataType: 'json',
             contentType: 'application/json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", "Basic " + btoa("admin" + ":" + "admin"));
+            },
             success: function (json) {
                 $('select').material_select('destroy');
                 $($.alumno.panel_borr).empty();
@@ -158,6 +170,9 @@ $.alumno.AlumnoUpdateREST = function (id, envio) {
             type: 'GET',
             dataType: 'json',
             contentType: 'application/json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader ("Authorization", "Basic " + btoa("admin" + ":" + "admin"));
+            },
             success: function (json) {
                 $($.alumno.panel_list).empty();
                 $($.alumno.panel_list).append('<h3>Pulse sobre un alumno</h3>');
@@ -207,6 +222,9 @@ $.alumno.AlumnoUpdateREST = function (id, envio) {
                 dataType: 'json',
                 contentType: "application/json",
                 data: JSON.stringify(datos),
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader ("Authorization", "Basic " + btoa("admin" + ":" + "admin"));
+                },
                 success: function (result, status, jqXHR) {
                     // probamos que se ha actualizado cargando de nuevo la lista -no es necesario-
                     $.alumno.AlumnoReadREST();
