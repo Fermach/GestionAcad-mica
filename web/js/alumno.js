@@ -29,35 +29,24 @@ $.alumno.panel_erro = '#panel_error';
  */
 $.alumno.AlumnoReadREST = function () {
     // con esta función jQuery hacemos la petición GET que hace el findAll()
-    $.ajax({
-        url: this.HOST + this.URL,
-        type: 'GET',
-        dataType: 'json',
-        contentType: 'application/json',
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader ("Authorization", "Basic " + btoa($.controller.username+":"+$.controller.password));
-        },
-        success: function (json) {
-            $($.alumno.panel_list).empty();
-            $($.alumno.panel_list).append('<h3>Listado de Alumnos</h3>');
-            var table = $('<table />').addClass('table table-stripped');
+    $.controller.doGet(
+            this.HOST + this.URL,
+            function (json) {
+                $($.alumno.panel_list).empty();
+                $($.alumno.panel_list).append('<h3>Listado de Alumnos</h3>');
+                var table = $('<table />').addClass('table table-stripped');
 
-            table.append($('<thead />').append($('<tr />').append('<th>id</th>', '<th>nombre</th>', '<th>apellidos</th>')));
-            var tbody = $('<tbody />');
-            for (var clave in json) {
-                tbody.append($('<tr />').append('<td>' + json[clave].id + '</td>',
-                        '<td>' + json[clave].nombre + '</td>', '<td>' + json[clave].apellido + '</td>'));
-            }
-            table.append(tbody);
+                table.append($('<thead />').append($('<tr />').append('<th>id</th>', '<th>nombre</th>', '<th>apellidos</th>')));
+                var tbody = $('<tbody />');
+                for (var clave in json) {
+                    tbody.append($('<tr />').append('<td>' + json[clave].id + '</td>',
+                            '<td>' + json[clave].nombre + '</td>', '<td>' + json[clave].apellido + '</td>'));
+                }
+                table.append(tbody);
 
-            $($.alumno.panel_list).append($('<div />').append(table));
-            $('tr:odd').css('background', '#CCCCCC');
-        },
-        error: function (xhr, status) {
-            // $.alumno.error('Imposible leer alumno', 'Compruebe su conexión e inténtelo de nuevo más tarde');
-            $.controller.activate("#panel_login")
-        }
-    });
+                $($.alumno.panel_list).append($('<div />').append(table));
+                $('tr:odd').css('background', '#CCCCCC');
+            });
 };
 
 /**
@@ -72,23 +61,14 @@ $.alumno.AlumnoCreateREST = function () {
 
     // comprobamos que en el formulario haya datos...
     if (datos.nombre.length > 2 && datos.apellido.length > 2) {
-        $.ajax({
-            url: $.alumno.HOST + $.alumno.URL,
-            type: 'POST',
-            dataType: 'json',
-            contentType: "application/json",
-            data: JSON.stringify(datos),
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", "Basic " + btoa("admin" + ":" + "admin"));
-            },
-            success: function (result, status, jqXHR) {
+        // doPost(target, datos, fn_exito)
+        $.controller.doPost(
+            $.alumno.HOST + $.alumno.URL,
+            datos,
+            function () {
                 // probamos que se ha actualizado cargando de nuevo la lista -no es necesario-
                 $.alumno.AlumnoReadREST();
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                $.alumno.error('Error: Alumno Create', 'No ha sido posible crear el alumno. Compruebe su conexión.');
-            }
-        });
+            });
 
         // cargamos el panel con id r_alumno.
         $.controller.activate($.alumno.panel_list);
@@ -104,35 +84,22 @@ $.alumno.AlumnoDeleteREST = function (id) {
     // si no, pintamos el formulario de selección para borrar.
     if (id !== undefined) {
         id = $('#d_al_sel').val();
-        $.ajax({
-            url: $.alumno.HOST + $.alumno.URL + '/' + id,
-            type: 'DELETE',
-            dataType: 'json',
-            contentType: "application/json",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", "Basic " + btoa("admin" + ":" + "admin"));
-            },
-            // data: JSON.stringify(datos),
-            success: function (result, status, jqXHR) {
+        // doDelete (target, id, fn_exito)
+        $.controller.doDelete(
+            $.alumno.HOST + $.alumno.URL,
+            id,
+            function () {
                 // probamos que se ha actualizado cargando de nuevo la lista -no es necesario-
                 $.alumno.AlumnoReadREST();
                 // cargamos el panel listado
                 $.controller.activate($.alumno.panel_list);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                $.alumno.error('Error: Alumno Delete', 'No ha sido posible borrar el alumno. Compruebe su conexión.');
-            }
-        });
+            });
     } else {
-        $.ajax({
-            url: this.HOST + this.URL,
-            type: 'GET',
-            dataType: 'json',
-            contentType: 'application/json',
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", "Basic " + btoa("admin" + ":" + "admin"));
-            },
-            success: function (json) {
+        // doGet (target, fn_exito)
+        $.controller.doGet(
+            this.HOST + this.URL,
+            function (json) {
+                // pintamos el formulario para ver a quien modificar
                 $('select').material_select('destroy');
                 $($.alumno.panel_borr).empty();
                 var formulario = $('<div />');
@@ -148,11 +115,7 @@ $.alumno.AlumnoDeleteREST = function (id) {
                 formulario.append('<div class="form-group"></div>').append('<div class="btn btn-danger" onclick="$.alumno.AlumnoDeleteREST(1)"> eliminar! </div>');
                 $($.alumno.panel_borr).append(formulario);
                 $('select').material_select();
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                $.alumno.error('Error: Alumno Delete', 'No ha sido posible conectar al servidor. Compruebe su conexión.');
-            }
-        });
+            }); 
     }
 
 };
@@ -165,16 +128,12 @@ $.alumno.AlumnoDeleteREST = function (id) {
  */
 
 $.alumno.AlumnoUpdateREST = function (id, envio) {
+    // si no le pasamos parámetro, hay que sacar la lista para 
+    // pulsar sobre quien queremos actualizar
     if (id === undefined) {
-        $.ajax({
-            url: this.HOST + this.URL,
-            type: 'GET',
-            dataType: 'json',
-            contentType: 'application/json',
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", "Basic " + btoa("admin" + ":" + "admin"));
-            },
-            success: function (json) {
+        $.controller.doGet(
+            this.HOST + this.URL,
+            function (json) {
                 $($.alumno.panel_list).empty();
                 $($.alumno.panel_list).append('<h3>Pulse sobre un alumno</h3>');
                 var table = $('<table />').addClass('table table-stripped');
@@ -187,15 +146,10 @@ $.alumno.AlumnoUpdateREST = function (id, envio) {
                             '<td>' + json[clave].nombre + '</td>', '<td>' + json[clave].apellido + '</td>'));
                 }
                 table.append(tbody);
-
                 $($.alumno.panel_list).append($('<div />').append(table));
                 $('tr:odd').css('background', '#CCCCCC');
                 $.controller.activate($.alumno.panel_list);
-            },
-            error: function (xhr, status) {
-                $.alumno.error('Error: Alumno Update', 'Ha sido imposible conectar al servidor.');
-            }
-        });
+            });
     } else if (envio === undefined) {
         var seleccion = "#fila_" + id + " td";
         var al_id = ($(seleccion))[0];
@@ -217,23 +171,16 @@ $.alumno.AlumnoUpdateREST = function (id, envio) {
 
         // comprobamos que en el formulario haya datos...
         if (datos.nombre.length > 2 && datos.apellido.length > 2) {
-            $.ajax({
-                url: $.alumno.HOST + $.alumno.URL + '/' + $("#u_al_id").val(),
-                type: 'PUT',
-                dataType: 'json',
-                contentType: "application/json",
-                data: JSON.stringify(datos),
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader ("Authorization", "Basic " + btoa("admin" + ":" + "admin"));
-                },
-                success: function (result, status, jqXHR) {
-                    // probamos que se ha actualizado cargando de nuevo la lista -no es necesario-
+            // doPut(target, id, datos, fn_exito)
+            $.controller.doPut(
+                $.alumno.HOST + $.alumno.URL,
+                $("#u_al_id").val(),
+                datos,
+                function() { 
+                    // esto es lo que se ejecuta cuando tengamos éxito tras el PUT
                     $.alumno.AlumnoReadREST();
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    $.alumno.error('Error: Alumno Update', 'No ha sido posible crear el alumno. Compruebe su conexión.');
                 }
-            });
+            );
 
             // cargamos el panel con id r_alumno.
             $.controller.activate($.alumno.panel_list);
