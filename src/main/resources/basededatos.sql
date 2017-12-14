@@ -54,3 +54,15 @@ INSERT INTO ASIGNATURA VALUES (
 
 -- INSERT INTO PROF_ASIG VALUES ();
 -- INSERT INTO PROF_ASIG VALUES ();
+
+CREATE TABLE Usuarios(
+	username VARCHAR(12) PRIMARY KEY,
+        password VARCHAR(12) NOT NULL ,
+	tipo SMALLINT);
+
+INSERT INTO Usuarios VALUES(
+    'admin',
+    'admin',
+    0);
+
+SELECT * FROM Usuarios WHERE username='admin' and password=?

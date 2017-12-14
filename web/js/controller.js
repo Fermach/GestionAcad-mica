@@ -5,12 +5,21 @@
 
 $.controller = {};
 
+$.controller.username="";
+$.controller.password="";
+
 $.controller.active_panel = "";
 
 $.controller.activate = function (panel_name) {
     $($.controller.active_panel).hide();
     $(panel_name).show();
     $.controller.active_panel = panel_name;
+};
+
+$.controller.login = function () {
+    $.controller.username = $("#username").val();
+    $.controller.password = $("#password").val();
+    $.controller.activate("#panel_main");
 };
 
 $.controller.init = function () {
@@ -28,6 +37,8 @@ $.controller.init = function () {
     $("#panel_main").show();
     $.controller.active_panel = "#panel_main";
 };
+
+
 
 
 

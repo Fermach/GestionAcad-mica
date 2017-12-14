@@ -32,7 +32,7 @@ public class Conexion {
     public static final int DERBY = 3;
     public static final int POSTGRE = 4;
 
-    Conexion() throws DAOException {
+    public Conexion() throws DAOException {
 
         // try (InputStream in =new FileInputStream(new File("/home/profesor/usr/apache-tomcat-8.5.23/webapps/GestionAcademica/WEB-INF/lib/db.prop"))  ) {
         // try (InputStream in = classLoader.getResourceAsStream("/WEB-INF/lib/db.prop")){        
@@ -52,7 +52,7 @@ public class Conexion {
         loadProperties();
     }
 
-    Connection getConexion() throws DAOException {
+    public Connection getConexion() throws DAOException {
         Connection con = null;
         String jdbcUrl = null;
         try {

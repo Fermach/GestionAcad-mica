@@ -35,7 +35,7 @@ $.alumno.AlumnoReadREST = function () {
         dataType: 'json',
         contentType: 'application/json',
         beforeSend: function (xhr) {
-            xhr.setRequestHeader ("Authorization", "Basic " + btoa("admin" + ":" + "admin"));
+            xhr.setRequestHeader ("Authorization", "Basic " + btoa($.controller.username+":"+$.controller.password));
         },
         success: function (json) {
             $($.alumno.panel_list).empty();
@@ -54,7 +54,8 @@ $.alumno.AlumnoReadREST = function () {
             $('tr:odd').css('background', '#CCCCCC');
         },
         error: function (xhr, status) {
-            $.alumno.error('Imposible leer alumno', 'Compruebe su conexión e inténtelo de nuevo más tarde');
+            // $.alumno.error('Imposible leer alumno', 'Compruebe su conexión e inténtelo de nuevo más tarde');
+            $.controller.activate("#panel_login")
         }
     });
 };
