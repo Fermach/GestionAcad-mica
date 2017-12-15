@@ -138,8 +138,8 @@
             
             <!-- Gestión usuario / Login  -->
             <div id="panel_login" class="panel" hidden>
-                <h3>Login</h3>
-                <div class="input">
+                <h3>Conexión al sistema</h3>
+                <div class="toast" id="form_login" >
                     <form>
                         <div class="input">
                             <input type="text" id="username" class="input-field" placeholder="username">
@@ -152,6 +152,9 @@
                             <div class="btn" onclick="$.controller.login();">Enviar!</div>
                         </div>
                     </form>
+                </div>
+                <div id="info_login">
+                    
                 </div>
             </div>
             
