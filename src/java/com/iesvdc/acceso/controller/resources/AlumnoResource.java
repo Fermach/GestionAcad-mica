@@ -124,15 +124,14 @@ public class AlumnoResource {
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("alumno")
-    public Response createAlumno(Alumno al) {
+    public void createAlumno(Alumno al) {
         AlumnoDAO al_dao = new AlumnoDAOImpl();
         try {
             al_dao.create(al);
         } catch (DAOException ex) {
             Logger.getLogger(ex.getLocalizedMessage());
-            return Response.status(400).entity(al).build();
         }
-        return Response.status(200).entity(al).build();
+        // return Response.status(200).entity(al).build();
     }
     
     @DELETE

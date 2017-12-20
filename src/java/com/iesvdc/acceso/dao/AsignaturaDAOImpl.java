@@ -79,7 +79,7 @@ public class AsignaturaDAOImpl implements AsignaturaDAO {
             }
             con.close();
         } catch (SQLException ex) {
-            throw new DAOException("Alumno:findByApellido: No puedo conectar a la BBDD ");
+            throw new DAOException("Asignatura:findAll(): No puedo conectar a la BBDD ");
         }
         return list_as;
     }
