@@ -15,12 +15,11 @@ import java.util.List;
 public interface UsuarioDAO {
     public void create(Usuario us) throws DAOException;
     public void update(Usuario old_us, Usuario new_us) throws DAOException;
-    public void update(Integer old_id, Usuario new_us) throws DAOException;
-    public void delete(Integer id) throws DAOException;
+    public void update(String old_name, Usuario new_us) throws DAOException;
+    public void delete(String username) throws DAOException;
     public void delete(Usuario us) throws DAOException;
-    public Usuario findById(Integer Id) throws DAOException;
-    public List<Usuario> findByUsername(String nombre) throws DAOException;
-    public List<Usuario> findByPassword(String apellido) throws DAOException;
+    public List<Usuario> findByUsername(String username) throws DAOException;
+    public List<Usuario> findByPassword(String password) throws DAOException;
     public List<Usuario> findAll() throws DAOException;
     public List<Usuario> findByUsernamePassword(String nombre, String apellido) throws DAOException;
 }

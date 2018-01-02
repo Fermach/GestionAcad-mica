@@ -8,7 +8,10 @@ package com.iesvdc.acceso.controller.resources;
 import com.iesvdc.acceso.dao.AlumnoDAO;
 import com.iesvdc.acceso.dao.AlumnoDAOImpl;
 import com.iesvdc.acceso.dao.DAOException;
+import com.iesvdc.acceso.dao.ProfesorDAO;
+import com.iesvdc.acceso.dao.ProfesorDAOImp;
 import com.iesvdc.acceso.pojo.Alumno;
+import com.iesvdc.acceso.pojo.Profesor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -27,93 +30,93 @@ import javax.ws.rs.core.Response;
  *
  * @author Juangu <jgutierrez at iesvirgendelcarmen.coms>
  */
-@Path("/alumno")
-public class AlumnoResource {
+@Path("/profesor")
+public class ProfesorResource {
 
     @GET
     @Path("/")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Alumno> getAlumnos() {
-        AlumnoDAO al_dao = new AlumnoDAOImpl();
-        List<Alumno> list_al;
+    public List<Profesor> getProfesores() {
+        ProfesorDAO pr_dao = new ProfesorDAOImp();
+        List<Profesor> list_pr;
         try {
-            list_al = al_dao.findAll();
+            list_pr = pr_dao.findAll();
         } catch (DAOException ex) {
-            list_al = new ArrayList<>();
+            list_pr = new ArrayList<>();
             Logger.getLogger(ex.getLocalizedMessage());
         }
-        return list_al;
+        return list_pr;
     }
 
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Alumno getAlumnoById(@PathParam("id") String id) {
-        AlumnoDAO al_dao = new AlumnoDAOImpl();
-        Alumno al;
+    public Profesor getProfesorById(@PathParam("id") String id) {
+        ProfesorDAO pr_dao = new ProfesorDAOImp();
+        Profesor pr;
         try {
-            al = al_dao.findById(Integer.parseInt(id));
+            pr = pr_dao.findById(Integer.parseInt(id));
         } catch (DAOException ex) {
-            al = new Alumno(-1, "Error", "Error");
+            pr = new Profesor(-1, "Error", "Error");
             Logger.getLogger(ex.getLocalizedMessage());
         }
-        return al;
+        return pr;
     }
 
     @GET
     @Path("apellido/{apellido}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Alumno> getAlumnoByApellido(@PathParam("apellido") String apellido) {
-        AlumnoDAO al_dao = new AlumnoDAOImpl();
-        List<Alumno> list_al;
+    public List<Profesor> getProfesorByApellido(@PathParam("apellido") String apellido) {
+        ProfesorDAO pr_dao = new ProfesorDAOImp();
+        List<Profesor> list_pr;
         try {
-            list_al = al_dao.findByApellido(apellido);
+            list_pr = pr_dao.findByApellido(apellido);
         } catch (DAOException ex) {
-            list_al = new ArrayList<>();
+            list_pr = new ArrayList<>();
             Logger.getLogger(ex.getLocalizedMessage());
         }
-        return list_al;
+        return list_pr;
     }
 
     @GET
     @Path("nombre/{nombre}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Alumno> getAlumnoByNombre(@PathParam("nombre") String nombre) {
-        AlumnoDAO al_dao = new AlumnoDAOImpl();
-        List<Alumno> list_al;
+    public List<Profesor> getProfesorByNombre(@PathParam("nombre") String nombre) {
+        ProfesorDAO pr_dao = new ProfesorDAOImp();
+        List<Profesor> list_pr;
         try {
-            list_al = al_dao.findByNombre(nombre);
+            list_pr = pr_dao.findByNombre(nombre);
         } catch (DAOException ex) {
-            list_al = new ArrayList<>();
+            list_pr = new ArrayList<>();
             Logger.getLogger(ex.getLocalizedMessage());
         }
-        return list_al;
+        return list_pr;
     }
 
     @GET
     @Path("nombre/{nombre}/apellido/{apellido}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Alumno> getAlumnoByNombreApellido(
+    public List<Profesor> getProfesorByNombreApellido(
             @PathParam("nombre") String nombre,
             @PathParam("apellido") String apellido) {
-        AlumnoDAO al_dao = new AlumnoDAOImpl();
-        List<Alumno> list_al;
+        ProfesorDAO pr_dao = new ProfesorDAOImp();
+        List<Profesor> list_pr;
         try {
-            list_al = al_dao.findByNombreApellido(nombre, apellido);
+            list_pr = pr_dao.findByNombreApellido(nombre, apellido);
         } catch (DAOException ex) {
-            list_al = new ArrayList<>();
+            list_pr = new ArrayList<>();
             Logger.getLogger(ex.getLocalizedMessage());
         }
-        return list_al;
+        return list_pr;
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public void updateAlumno(@PathParam("id") Integer id, Alumno al) {
-        AlumnoDAO al_dao = new AlumnoDAOImpl();
+    public void updateProfesor(@PathParam("id") Integer id, Profesor pr) {
+        ProfesorDAO pr_dao = new ProfesorDAOImp();
         try {
-            al_dao.update(id, al);
+            pr_dao.update(id, pr);
         } catch (DAOException ex) {
             Logger.getLogger(ex.getLocalizedMessage());
         }
@@ -124,10 +127,10 @@ public class AlumnoResource {
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("/")
-    public void createAlumno(Alumno al) {
-        AlumnoDAO al_dao = new AlumnoDAOImpl();
+    public void createProfesor(Profesor pr) {
+        ProfesorDAO pr_dao = new ProfesorDAOImp();
         try {
-            al_dao.create(al);
+            pr_dao.create(pr);
         } catch (DAOException ex) {
             Logger.getLogger(ex.getLocalizedMessage());
         }
@@ -136,10 +139,10 @@ public class AlumnoResource {
     
     @DELETE
     @Path("{id}")
-    public void deleteAlumno(@PathParam("id") Integer id) {
-        AlumnoDAO al_dao = new AlumnoDAOImpl();
+    public void deleteProfesor(@PathParam("id") Integer id) {
+        ProfesorDAO pr_dao = new ProfesorDAOImp();
         try {
-            al_dao.delete(id);
+            pr_dao.delete(id);
         } catch (DAOException ex) {
             Logger.getLogger(ex.getLocalizedMessage());
         }

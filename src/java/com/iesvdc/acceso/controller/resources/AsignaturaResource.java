@@ -5,13 +5,21 @@
  */
 package com.iesvdc.acceso.controller.resources;
 
+import com.iesvdc.acceso.dao.AlumnoDAO;
+import com.iesvdc.acceso.dao.AlumnoDAOImpl;
 import com.iesvdc.acceso.dao.AsignaturaDAO;
 import com.iesvdc.acceso.dao.AsignaturaDAOImpl;
 import com.iesvdc.acceso.dao.DAOException;
+import com.iesvdc.acceso.pojo.Alumno;
 import com.iesvdc.acceso.pojo.Asignatura;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -55,7 +63,7 @@ public class AsignaturaResource {
     }
 
     @GET
-    @Path("apellido/{apellido}")
+    @Path("curso/{curso}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Asignatura> getAsignaturaByCurso(@PathParam("curso") String curso) {
         AsignaturaDAO as_dao = new AsignaturaDAOImpl();
@@ -68,7 +76,35 @@ public class AsignaturaResource {
         }
         return list_as;
     }
+    
+     @GET
+    @Path("ciclo/{ciclo}")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<Asignatura> getAsignaturaByCiclo(@PathParam("ciclo") String ciclo) {
+        AsignaturaDAO as_dao = new AsignaturaDAOImpl();
+        List<Asignatura> list_as;
+        try {
+            list_as = as_dao.findByCiclo(ciclo);
+        } catch (DAOException ex) {
+            list_as = new ArrayList<>();
+            System.out.println(ex.getLocalizedMessage());
+        }
+        return list_as;
+    }
 
+    @PUT
+    @Path("{id}")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public void updateAsignatura(@PathParam("id") Integer id, Asignatura as) {
+        AsignaturaDAO as_dao = new AsignaturaDAOImpl();
+        try {
+            as_dao.update(id, as);
+        } catch (DAOException ex) {
+            Logger.getLogger(ex.getLocalizedMessage());
+        }
+    }
+
+    
     @GET
     @Path("nombre/{nombre}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -83,5 +119,29 @@ public class AsignaturaResource {
         }
         return list_as;
     }
-
+    
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Path("/")
+    public void createAsignatura(Asignatura as) {
+        AsignaturaDAO as_dao = new AsignaturaDAOImpl();
+        try {
+            as_dao.create(as);
+        } catch (DAOException ex) {
+            Logger.getLogger(ex.getLocalizedMessage());
+        }
+        // return Response.status(200).entity(al).build();
+    }
+    
+    @DELETE
+    @Path("{id}")
+    public void deleteAsignatura(@PathParam("id") Integer id) {
+        AsignaturaDAO as_dao = new AsignaturaDAOImpl();
+        try {
+            as_dao.delete(id);
+        } catch (DAOException ex) {
+            Logger.getLogger(ex.getLocalizedMessage());
+        }
+    }
 }

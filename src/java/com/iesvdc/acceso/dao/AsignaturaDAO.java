@@ -17,20 +17,15 @@ import java.util.List;
  * @author profesor
  */
 public interface AsignaturaDAO {
-    void create(Asignatura as) throws DAOException;
-    void update() throws DAOException;
-    void delete() throws DAOException;
-    List<Asignatura> findAll() throws DAOException;
-    List<Asignatura> findByName(String name) throws DAOException;
-    Asignatura findById(Integer id) throws DAOException;
-    List<Asignatura> findByCurso(Integer curso) throws DAOException;
-    List<Asignatura> findByCiclo(String ciclo) throws DAOException;
-    List<Alumno> findAlumnos(Integer id_as) throws DAOException;
-    List<Alumno> findAlumnos(Asignatura as) throws DAOException;
-    List<Profesor> findProfesores(Integer id_as) throws DAOException;
-    List<Profesor> findProfesores(Asignatura as) throws DAOException;
-    List<AluAsi> findAluAsi(Integer id_as) throws DAOException;
-    List<AluAsi> findAluAsi(Asignatura as) throws DAOException;
-    List<ProAsi> findProAsi(Integer id_as) throws DAOException;
-    List<ProAsi> findProAsi(Asignatura as) throws DAOException;
+    public void create(Asignatura as) throws DAOException;
+    public void update(Integer old_id, Asignatura new_as) throws DAOException;
+    public void update(Asignatura old_as, Asignatura new_as) throws DAOException;
+    public void delete(Integer id) throws DAOException;
+    public void delete(Asignatura as) throws DAOException;
+    public List<Asignatura> findAll() throws DAOException;
+    public List<Asignatura> findByName(String name) throws DAOException;
+    public Asignatura findById(Integer id) throws DAOException;
+    public List<Asignatura> findByCurso(Integer curso) throws DAOException;
+    public List<Asignatura> findByCiclo(String ciclo) throws DAOException;
+    
 }
