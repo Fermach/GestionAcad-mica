@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author profesor
+ * @author Fermach
  */
 public interface ProfesorDAO {
 

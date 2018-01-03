@@ -28,7 +28,7 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author Juangu <jgutierrez at iesvirgendelcarmen.coms>
+ * @author Fermach
  */
 @Path("/profesor")
 public class ProfesorResource {

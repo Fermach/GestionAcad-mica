@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  *
- * @author Juangu <jgutierrez at iesvirgendelcarmen.coms>
+ * @author Fermach
  */
 public class AsignaturaDAOImpl implements AsignaturaDAO {
 
